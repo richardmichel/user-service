@@ -1,0 +1,16 @@
+{
+    "name": "richardmichel/user-service",
+    "keywords": ["richardmichel", "laravel", "user-service"],
+    "license": "MIT",
+    "require": {
+        "laravel/framework": "^8.75",
+        "php": ">=7.4.0"
+    },
+    "authors": [
+        {
+            "name": "MichelNogales",
+            "email": "michelnogales@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
