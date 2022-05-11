@@ -12,13 +12,19 @@ abstract class ApiService
 
     public function request($method, $path, $data = [])
     {
-        $response = $this->getRequest($method, $path, $data);
+        try{
+            
+            $response = $this->getRequest($method, $path, $data);
 
-        if ($response->ok()) {
-            return $response->json();
+            if ($response->successful()) {
+                return $response->json();
+            }
+
+            throw new HttpException($response->status(),$response->body());
+
+        }catch(\Exception $e){
+            throw new HttpException(500,$e->getMessage());
         }
-
-        throw new HttpException($response->status(),$response->body());
     }
 
     public function getRequest($method, $path, $data = [])
