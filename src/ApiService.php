@@ -15,14 +15,19 @@ abstract class ApiService
         try {
 
             $response = $this->getRequest($method, $path, $data);
-
             if ($response->successful()) {
                 return $response->json();
             }
-
             throw new HttpException($response->status(), $response->body());
         } catch (\Exception $e) {
-            throw new HttpException(500, $e->getMessage());
+
+            if (method_exists($e, 'getStatusCode')) {
+                $statusCode = $e->getStatusCode();
+            } else {
+                $statusCode = 500;
+            }
+
+            throw new HttpException($statusCode, $e->getMessage());
         }
     }
 
