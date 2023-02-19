@@ -1,6 +1,6 @@
 <?php
 
-namespace MichiServices\Common;
+namespace MichiServices\Common\Services;
 
 class UserService extends ApiService
 {
