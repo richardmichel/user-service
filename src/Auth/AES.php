@@ -5,7 +5,7 @@ namespace MichiServices\Common\Auth;
 
 class AES
 {
-    public function encrypt($data, $password)
+    public static function encrypt($data, $password)
     {
         $salt = openssl_random_pseudo_bytes(8);
 
@@ -27,7 +27,7 @@ class AES
         return base64_encode('Salted__' . $salt . $encryptedData);
     }
 
-    public function decrypt($data, $password)
+    public static function decrypt($data, $password)
     {
         $data = base64_decode($data);
         $salt = substr($data, 8, 8);
