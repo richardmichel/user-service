@@ -16,5 +16,10 @@
       "email": "michelnogales@gmail.com"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "MichiServices\\Common\\": "src/"
+    }
+  },
   "minimum-stability": "dev"
 }
