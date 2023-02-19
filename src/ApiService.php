@@ -1,8 +1,6 @@
 <?php
 
-
-namespace Services;
-
+namespace MichiServices\Common;
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
