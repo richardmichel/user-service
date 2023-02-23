@@ -33,7 +33,7 @@ abstract class ApiService
     {
         return \Http::acceptJson()->withHeaders([
             'Authorization' => 'Bearer ' . request()->cookie('jwt')
-        ])->$method("{$this->endpoint}/{$path}", $data);
+        ])->$method("{$this->endpoint}{$path}", $data);
     }
 
     public function post($path, $data)
