@@ -31,7 +31,10 @@ abstract class ApiService
 
     public function getRequest($method, $path, $data = [])
     {
+        $headers = request()->header();
+
         return \Http::acceptJson()->withHeaders([
+            ...$headers,
             'Authorization' => 'Bearer ' . request()->cookie('jwt')
         ])->$method("{$this->endpoint}{$path}", $data);
     }
