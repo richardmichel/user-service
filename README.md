@@ -21,5 +21,6 @@ user-service
         ],
         
 
-        git tag -a v1.0.5 -m "version 1.0.5"
+git tag -a v1.0.9 -m "version 1.0.9"
+
 git push origin v1.0.1

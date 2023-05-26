@@ -8,11 +8,11 @@ abstract class ApiService
 {
     protected string $endpoint;
 
-    public function request($method, $path, $data = [])
+    public function request($method, $path, $data = [], $withALLHeaders = false)
     {
         try {
 
-            $response = $this->getRequest($method, $path, $data);
+            $response = $this->getRequest($method, $path, $data, $withALLHeaders);
             if ($response->successful()) {
                 return $response->json();
             }
@@ -29,33 +29,39 @@ abstract class ApiService
         }
     }
 
-    public function getRequest($method, $path, $data = [])
+    public function getRequest($method, $path, $data = [], $withALLHeaders = false)
     {
-        $headers = request()->header();
 
-        return \Http::acceptJson()->withHeaders([
-            ...$headers,
+        $payload = [
             'Authorization' => 'Bearer ' . request()->cookie('jwt')
-        ])->$method("{$this->endpoint}{$path}", $data);
+        ];
+        if ($withALLHeaders) {
+            $headers = request()->header();
+            $payload = [
+                ...$headers,
+                'Authorization' => 'Bearer ' . request()->cookie('jwt')
+            ];
+        }
+        return \Http::acceptJson()->withHeaders($payload)->$method("{$this->endpoint}{$path}", $data);
     }
 
-    public function post($path, $data)
+    public function post($path, $data, $withALLHeaders = false)
     {
-        return $this->request('post', $path, $data);
+        return $this->request('post', $path, $data, $withALLHeaders);
     }
 
-    public function get($path)
+    public function get($path, $withALLHeaders = false)
     {
-        return $this->request('get', $path);
+        return $this->request('get', $path, [], $withALLHeaders);
     }
 
-    public function put($path, $data)
+    public function put($path, $data, $withALLHeaders = false)
     {
-        return $this->request('put', $path, $data);
+        return $this->request('put', $path, $data, $withALLHeaders);
     }
 
-    public function delete($path)
+    public function delete($path, $withALLHeaders = false)
     {
-        return $this->request('delete', $path);
+        return $this->request('delete', $path, [], $withALLHeaders);
     }
 }
