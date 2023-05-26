@@ -32,14 +32,22 @@ abstract class ApiService
     public function getRequest($method, $path, $data = [], $withALLHeaders = false)
     {
 
+        $token = '';
+        try {
+            $decoded = decrypt(request()->cookie('jwt'), false);
+            list($userId, $token) = explode('|', $decoded);
+        } catch (\Exception) {
+            $token = request()->cookie('jwt');
+        }
+
         $payload = [
-            'Authorization' => 'Bearer ' . request()->cookie('jwt')
+            'Authorization' => 'Bearer ' . $token
         ];
         if ($withALLHeaders) {
             $headers = request()->header();
             $payload = [
                 ...$headers,
-                'Authorization' => 'Bearer ' . request()->cookie('jwt')
+                'Authorization' => 'Bearer ' . $token
             ];
         }
         return \Http::acceptJson()->withHeaders($payload)->$method("{$this->endpoint}{$path}", $data);
