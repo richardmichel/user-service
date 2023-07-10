@@ -58,9 +58,9 @@ abstract class ApiService
         return $this->request('post', $path, $data, $withALLHeaders);
     }
 
-    public function get($path, $withALLHeaders = false)
+    public function get($path, $data = [], $withALLHeaders = false)
     {
-        return $this->request('get', $path, [], $withALLHeaders);
+        return $this->request('get', $path, $data, $withALLHeaders);
     }
 
     public function put($path, $data, $withALLHeaders = false)
